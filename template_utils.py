@@ -12,18 +12,23 @@ ws_regex = re.compile(r'^(\s*)(.*?)(\s*)$')
 # _swap_braces_recursive, but the stuff in the larger expression is. Since I
 # want leading and trailing braces to be processed if they're part of a pair,
 # I need to force braces into the larger expression if they're part of a pair,
-# and into the smaller expression if they're not. The way I accomplished this
-# was to put start-of-line and end-of-line tokens in the large expression, so
-# that leading and trailing braces get included in there if they're not
-# preceeded by text that *doesn't end in another such brace*.
-# There are two expressions to describe a string that doesn't end in a brace:
+# and into the smaller expression if they're not.
+#
+# The way I accomplished this was to put start-of-line and end-of-line tokens
+# in the large expression (i.e. the one that's processed).
+#
+# Now, there are two types of string that don't end in a brace:
 # a nonempty string that ends in a non-brace character, and an empty string.
-# That's why the larger expression always has three clauses:
-# 1) a nonempty string that either ends in a non-rbrace (rbrace_reges) or starts
-#    a non-lbrace
+#
+# Therefore, the larger expression always has three clauses:
+# 1) a nonempty string that ends in a non-brace (rbrace_regex; starts
+#    with a non-brace for lbrace_regex)
 # 2) an empty string ($ in lbrace_regex and ^ in rbrace regex)
 # 3) a nonempty string that includes the whole line, including any
-# leading/trailing braces, so that they can be processed
+#    leading/trailing braces, so that they can be processed (this includes
+#    the start-of-line/end-of-line characters, which it seems can match more
+#    than once)
+#
 # If 1) or 2) match, then the leading/trailing brace will be captured by the
 # small capture group and not processed. If 3 matches, then there is either no
 # leading/trailing brace, or it's part of a pair and should be processed anyway.
