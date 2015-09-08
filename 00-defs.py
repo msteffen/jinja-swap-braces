@@ -22,7 +22,7 @@ def gencmd(cmd):
 #   run_binary 192.168.0.1 --user=msteffen --binary=${BINARY}
 # As the cell result in ipython, for easy copying and pasting (or further tweaking)
 def printcmds(*cmds, **vardefs):
-  print '\n'.join(flatten([
+  print '\n\n'.join(flatten([
     [ '{}={}'.format(k, gencmd(v)) for k, v in vardefs.iteritems() ],
     [ gencmd(c) for c in cmds ],
   ]))
