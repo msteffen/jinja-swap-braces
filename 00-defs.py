@@ -2,7 +2,7 @@ import jinja2
 import itertools
 
 import sys
-sys.path.append('...path/to/template_utils.py')
+sys.path.append('...path/to/template_utils_parent_dir')
 import template_utils
 
 def nz(s):
